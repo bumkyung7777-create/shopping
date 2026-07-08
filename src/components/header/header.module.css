@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.header-menu {
+    font-size: 22px;
+}
+.header-menu {
+    display: flex;
+    align-items: center;
+}
+.header-menu > a {
+    width: 25%;
+    min-width: 270px;
+}
+.header-menu > a img {
+    width: 100%;
+}
+.header-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+}
+.search-box-layout {
+    display: flex;
+}
+.search-box div svg {
+    width: 25px;
+}

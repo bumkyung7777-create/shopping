@@ -1,27 +1,370 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* reset */
+html {
+    font-size: 10px;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    font-family:
+        'pretendard', '맑은 고딕', 'Malgun Gothic', MalgunGothic, Dotum, '돋움', Helvetica,
+        AppleSDGothicNeo, sans-serif;
+    -webkit-text-size-adjust: none;
+}
+html,
+body {
+    height: 100%;
+}
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    background: transparent;
+}
+h1,
+h2,
+h3 {
+    line-height: 1.4;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+ul,
+ol,
+dl,
+dt,
+dd {
+    list-style: none;
+    margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+a {
+    -webkit-transition: all 0.2s ease-in-out;
+    color: #000;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+a:focus,
+a:hover {
+    text-decoration: none;
+    outline: none !important;
+}
+/* --------------------------------------------
+ * etc
+/* ------------------------------------------ */
+i,
+cite,
+em,
+var,
+address,
+dfn {
+    font-style: normal;
+}
+hr {
+    display: none;
+}
+sup {
+    position: relative;
+    top: -3px;
+    padding-left: 3px;
+    font-size: 11px;
+}
+blockquote,
+q {
+    quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+strong {
+    font-weight: 700;
+}
+/* --------------------------------------------
+ * img
+/* ------------------------------------------ */
+img {
+    vertical-align: top;
+    max-width: 100%;
+    border: 0;
+}
+img.full {
+    width: 100%;
+    height: auto;
+}
+iframe,
+embed,
+object,
+video {
+    max-width: 100%;
+}
+/* --------------------------------------------
+ * table
+/* ------------------------------------------ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+    word-break: break-all;
+    vertical-align: middle;
+    font-weight: 400;
+}
+caption {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* --------------------------------------------
+ * fieldset
+/* ------------------------------------------ */
+fieldset {
+    border: none;
+}
+.blind,
+legend {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    left: 0;
+    top: -999999px;
+}
+
+/* --------------------------------------------
+ * form
+/* ------------------------------------------ */
+button {
+    width: auto;
+    overflow: visible;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-family:
+        'pretendard', '맑은 고딕', 'Malgun Gothic', MalgunGothic, Dotum, '돋움', Helvetica,
+        AppleSDGothicNeo, sans-serif;
+    font-weight: 500;
+    outline: none;
+}
+input,
+textarea {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    font-size: 1.6rem;
+    color: #000;
+    line-height: inherit;
+    font-family:
+        'pretendard', '맑은 고딕', 'Malgun Gothic', MalgunGothic, Dotum, '돋움', Helvetica,
+        AppleSDGothicNeo, sans-serif;
+    outline: none;
+    resize: none;
+    vertical-align: middle;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    opacity: 0;
+}
+input[type='button'],
+input[type='submit'] {
+    cursor: pointer;
+}
+input[type='button'],
+button {
+    vertical-align: middle;
+    appearance: none;
+    -ms-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+}
+input[type='file'] {
+    cursor: pointer;
+}
+input[type='checkbox'] {
+    -webkit-appearance: checkbox;
+}
+input[type='radio'] {
+    -webkit-appearance: radio;
+}
+button:disabled {
+    background-color: #e8ecf5;
+    color: #bbc4d8;
+    border: 1px solid #f5f7fa;
+}
+textarea::-webkit-input-placeholder {
+    color: #a5afc2;
+}
+textarea::-moz-placeholder {
+    color: #a5afc2;
+}
+textarea:-ms-input-placeholder {
+    color: #a5afc2;
+}
+textarea::-ms-input-placeholder {
+    color: #a5afc2;
+}
+
+input::-webkit-input-placeholder {
+    color: #a5afc2;
+}
+input::-moz-placeholder {
+    color: #a5afc2;
+}
+input:-ms-input-placeholder {
+    color: #a5afc2;
+}
+input::-ms-input-placeholder {
+    color: #a5afc2;
+}
+
+.app {
+    padding: 20px;
+}
+.flex-layout {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.review-box {
+    padding: 30px;
+    border: solid 1px #000;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.review-box h3 span {
+    font-weight: 300;
+}
+.review-box h3 {
+    font-weight: bold;
+    font-size: 17px;
+}
+.review-box table tbody tr td {
+    padding-bottom: 20px;
+}
+.review-box table tbody tr:last-child td {
+    padding-bottom: 0;
 }

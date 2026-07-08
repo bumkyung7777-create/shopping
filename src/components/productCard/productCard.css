@@ -1,0 +1,37 @@
+.shoping-list h4 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.shoping-list p {
+    padding-top: 10px;
+}
+
+.tab-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+}
+.tab-list li {
+    padding: 4px;
+    border-radius: 26px;
+    background-color: aliceblue;
+    font-weight: bold;
+    font-size: 15px;
+}
+.description {
+    display: -webkit-box;
+    height: 100px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tag p {
+    padding-right: 10px;
+}
+.tag {
+    display: flex;
+    align-items: center;
+}
