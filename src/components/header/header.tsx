@@ -1,55 +1,99 @@
 'use client';
-
+import { useRouter } from 'next/navigation';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { CATEGORIES } from '@/constants/category';
+import { useState } from 'react';
 
 export default function Header() {
+    const router = useRouter();
+    const [isopen, setIsOpin] = useState(false);
+    const searchKeyWord = (keyWord: string) => {
+        const value = keyWord.trim();
+        if (!value) return;
+        setIsOpin(false);
+        router.push(`/search?q=${value}`);
+    };
     return (
-        <div className={styles['header']}>
-            <div className={styles['header-menu']}>
-                <Link href="/">
-                    <img
-                        src="https://contents.sixshop.com/uploadedFiles/158733/default/image_1750437807923.png"
-                        alt=""
-                    />
-                </Link>
-                <ul>
-                    {CATEGORIES.map((category) => (
-                        <li key={category.slug}>
-                            <Link href={`/products?category=${category.slug}`}>
-                                {category.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        <div>
+            <div className={styles['header']}>
+                <div className={styles['header-menu']}>
+                    <Link href="/">
+                        <img
+                            src="https://contents.sixshop.com/uploadedFiles/158733/default/image_1750437807923.png"
+                            alt=""
+                        />
+                    </Link>
+                    <ul>
+                        {CATEGORIES.map((category) => (
+                            <li key={category.slug}>
+                                <Link href={`/products?category=${category.slug}`}>
+                                    {category.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <div className={styles['search-box']}>
-                <div className={styles['search-box-layout']}>
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg
-                            className="w-5 h-5 text-gray-400 search-ico"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://w3.org"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            ></path>
-                        </svg>
+                <div className={styles['search-box']}>
+                    <div className={styles['search-box-layout']}>
+                        <button onClick={() => setIsOpin((prev) => !prev)}>search</button>
                     </div>
-                    <input
-                        type="search"
-                        className="w-full py-2 pl-10 pr-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="검색어를 입력하세요..."
-                    />
                 </div>
             </div>
+            {isopen && (
+                <div>
+                    <div className={styles['search-panel']}>
+                        <div className="w-full bg-[#f3f3f3] px-9 pt-12 pb-8">
+                            <div className="flex items-center justify-between border-b border-black/40 pb-4">
+                                <div className="flex items-center gap-3">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.8"
+                                        className="h-10 w-10 text-black"
+                                    >
+                                        <circle cx="11" cy="11" r="7" />
+                                        <path d="m20 20-3.5-3.5" />
+                                    </svg>
+
+                                    <input
+                                        type="text"
+                                        placeholder="검색어를 입력해주세요."
+                                        className="w-[420px] bg-transparent text-[18px] text-black placeholder:text-[#9b9b9b] outline-none"
+                                        onKeyDown={(event) => {
+                                            if (event.key === 'Enter') {
+                                                searchKeyWord(event.currentTarget.value);
+                                            }
+                                        }}
+                                    />
+                                </div>
+
+                                <button
+                                    type="button"
+                                    aria-label="검색 닫기"
+                                    className="shrink-0 text-black"
+                                    onClick={() => setIsOpin((prev) => !prev)}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.8"
+                                        className="h-10 w-10"
+                                    >
+                                        <path d="M6 6l12 12M18 6 6 18" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div onClick={() => setIsOpin((prev) => !prev)} className={styles['dim']}></div>
+                </div>
+            )}
         </div>
     );
 }

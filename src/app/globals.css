@@ -368,3 +368,12 @@ input::-ms-input-placeholder {
 .review-box table tbody tr:last-child td {
     padding-bottom: 0;
 }
+.no-item {
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

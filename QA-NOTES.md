@@ -167,4 +167,34 @@ const product = data;
 
 ---
 
+## 6. Zustand `create`로 만든 store, 도대체 뭐 하는 코드일까?
+
+**위치:** [store/openState.ts](store/openState.ts)
+
+```ts
+import { create } from 'zustand';
+type openState = {
+    openValue: string;
+    setOpenValue: (name: string) => void;
+};
+
+export const useUserStore = create<openState>()((set) => ({
+    openValue: '',
+    setOpenValue: (name) => set({ openValue: name }),
+}));
+```
+
+**쉽게 설명하면:**
+
+- `useState`는 그 컴포넌트 **안에서만** 쓸 수 있는 개인 서랍이에요. 다른 컴포넌트는 그 서랍을 절대 못 열어요.
+- Zustand의 `create`는 **학교 전체가 같이 쓰는 공용 사물함**을 하나 만드는 거예요. 어떤 컴포넌트든 그 사물함 번호(`useUserStore`)만 알면 열어서 값을 읽거나 바꿀 수 있어요.
+- `type openState`는 "이 사물함 안에 뭐가 들어있어야 하는지" 정하는 규칙표예요. `openValue`라는 글자(string) 하나랑, 그 글자를 바꾸는 `setOpenValue`라는 기능이 반드시 있어야 한다고 정해놨어요.
+- `create<openState>()((set) => ({ ... }))` 부분:
+  - `openValue: ''` → 사물함을 처음 만들 때 넣어두는 값. 지금은 빈 글자로 시작.
+  - `setOpenValue: (name) => set({ openValue: name })` → `set`은 Zustand가 미리 챙겨주는 "사물함 내용 바꾸기" 도구예요. `setOpenValue('hello')`라고 부르면 사물함 안 `openValue`가 `'hello'`로 바뀌고, 그 사물함을 보고 있는 모든 컴포넌트가 자동으로 다시 그려져요(리렌더링).
+- `useUserStore`는 이 사물함을 쓰기 위한 **열쇠(훅)**예요. 어느 컴포넌트에서든 `const { openValue, setOpenValue } = useUserStore();` 처럼 불러와서 값을 읽거나 바꿀 수 있어요.
+- 참고: 지금 이름이 `useUserStore`인데, 실제로는 "유저 정보"가 아니라 "열림/닫힘 같은 값"을 담고 있어서 `useOpenStore` 같은 이름이 더 헷갈리지 않아요. (당장 고칠 필요는 없고 나중에 참고용)
+
+---
+
 <!-- 새로운 질문은 이 아래에 이어서 추가하면 됩니다. -->
