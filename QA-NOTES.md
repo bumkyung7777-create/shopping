@@ -197,4 +197,47 @@ export const useUserStore = create<openState>()((set) => ({
 
 ---
 
+## 7. `{ searchParams }: { searchParams: { q?: string } }`, 중괄호가 왜 두 번 겹쳐 나올까?
+
+**위치:** [src/app/search/page.tsx:4](src/app/search/page.tsx#L4)
+
+```tsx
+export default async function searchPage({ searchParams }: { searchParams: { q?: string } }) {
+```
+
+**쉽게 설명하면:**
+
+이 안에는 서로 역할이 다른 중괄호 두 종류가 겹쳐 있어요.
+
+- **앞쪽 `{ searchParams }`** → **구조 분해(값을 어떻게 꺼낼지)**. Next.js가 이 함수를 부를 때 `{ searchParams: { q: "shoes" } }` 같은 객체 하나를 통째로 넘겨주는데, 그걸 함수 안에서 바로 `searchParams`라는 이름으로 꺼내 쓰는 문법이에요.
+- **뒤쪽 `: { searchParams: { q?: string } }`** → **타입 표기(그 객체가 어떤 모양이어야 하는지)**. "매개변수로 들어오는 객체는 `searchParams`라는 프로퍼티를 갖고 있고, 그 안에는 `q`라는 문자열(있어도 되고 없어도 되는 `?`)이 들어있다"는 규칙이에요.
+
+즉, 앞은 자바스크립트 문법(값 꺼내기), 뒤는 타입스크립트 문법(모양 정하기)이라서 하는 일이 완전히 다른데, 우연히 둘 다 `{ }`를 쓰다 보니 겹쳐 보여서 헷갈리기 쉬워요. 풀어서 쓰면 이렇게 두 줄과 같아요.
+
+```ts
+function searchPage(props: { searchParams: { q?: string } }) {
+  const { searchParams } = props;
+}
+```
+
+참고: [3번 항목](#3-동적-라우팅에서-params와-searchparams-정확히-뭐가-다를까)에서 봤던 `params`/`searchParams` 구조 분해와 같은 패턴이고, 여기서는 `searchParams`만 받는 페이지라는 점만 달라요.
+
+---
+
+## 8. `{조건 ? <p>...</p> : null}`, 왜 뒤에 `: null`이 붙을까?
+
+**위치:** [src/app/search/page.tsx:9](src/app/search/page.tsx#L9)
+
+```tsx
+{data.products.length == 0 ? <p className="no-item">검색 결과가 없습니다.</p> : null}
+```
+
+**쉽게 설명하면:**
+
+- `조건 ? A : B` 는 자바스크립트의 **삼항 연산자**예요. "조건이 참이면 A, 거짓이면 B"라는 뜻으로, `if/else`를 한 줄로 압축한 문법이에요.
+- 이 문법은 `?`와 `:` 둘 다 있어야 완전한 하나의 "값"이 돼요. 그래서 조건이 거짓일 때 뭘 쓸지도 반드시 정해줘야 하고, 여기서는 "개수가 0개가 아니면 아무것도 안 보여줘도 된다"는 뜻으로 `null`을 넣은 거예요.
+- React는 `null`(그리고 `undefined`, `false`)을 만나면 화면에 아무것도 그리지 않고 그냥 건너뛰어요. 그래서 "조건 아닐 때는 아무것도 표시 안 하고 싶다"고 할 때 `: null`을 자주 씁니다.
+
+---
+
 <!-- 새로운 질문은 이 아래에 이어서 추가하면 됩니다. -->
