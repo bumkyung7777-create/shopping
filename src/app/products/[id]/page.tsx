@@ -3,7 +3,6 @@ export default async function detailPage({ params }: { params: { id: string } })
     const res = await fetch(`https://dummyjson.com/products/${params.id}`);
     const data: Product = await res.json();
     const product = data;
-    console.log('심범경', data);
 
     interface Review {
         comment: string;
